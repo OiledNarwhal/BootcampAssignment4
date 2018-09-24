@@ -19,17 +19,21 @@ module.exports.init = function() {
   //body parsing middleware 
   app.use(bodyParser.json());
 
-  
   /**TODO
   Serve static files */
+  app.use('/', express.static('client'));
   
 
   /**TODO 
   Use the listings router for requests to the api */
+  app.use('/api/listings', listingsRouter);
+  app.use('/api/listings/:listingID', listingsRouter);
 
 
   /**TODO 
   Go to homepage for all routes not specified */ 
+  app.use('*', express.static('/client/index.html'));
+
 
   return app;
 };  

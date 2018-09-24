@@ -39,24 +39,81 @@ exports.read = function(req, res) {
 /* Update a listing */
 exports.update = function(req, res) {
   var listing = req.listing;
+  console.log(req.body);
 
   /** TODO **/
   /* Replace the article's properties with the new properties found in req.body */
   /* Save the article */
+
+  Listing.findById(req.listing, function(err, buildings)
+  {
+    if(err)
+    {
+      console.log(err);
+      res.status(400);
+      res.send(err);
+    }
+    else
+    {
+      if(req.body.name != null)
+      {
+        buildings.name = req.body.name;
+      }
+      if(req.body.code != null)
+      {
+        buildings.code = req.body.code;
+      }
+      if(req.body.address != null)
+      {
+        buildings.address = req.body.address;
+      }
+      if(req.body.coordinates != null)
+      {
+        buildings.coordinates = req.body.coordinates;
+      }
+      res.json(buildings);
+    }
+  });
 };
 
 /* Delete a listing */
 exports.delete = function(req, res) {
-  var listing = req.listing;
 
   /** TODO **/
   /* Remove the article */
+  Listing.findByIdAndRemove(req.listing, function(err, building)
+  {
+    if(err)
+    {
+      res.status(400);
+      res.send(err);
+    }
+    else
+    {
+      res.status(200);
+      res.send(building);
+    }
+  });
 };
 
 /* Retreive all the directory listings, sorted alphabetically by listing code */
 exports.list = function(req, res) {
+
   /** TODO **/
   /* Your code here */
+  Listing.find({}).sort({code: 1}).exec(function(err, buildings)
+  {
+    if(err)
+    {
+      res.status(400);
+      res.send(err);
+    }
+    else
+    {
+      res.send(buildings);
+    }
+
+  });
 };
 
 /* 
