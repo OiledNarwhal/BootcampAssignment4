@@ -5,6 +5,6 @@ var config = require('./config'),
 module.exports.start = function() {
   var app = express.init();
   app.listen(config.PORT, function() {
-    console.log('App listening on port', config.port);
+    console.log('App listening on port', config.PORT);
   });
 };
